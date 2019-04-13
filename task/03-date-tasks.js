@@ -22,7 +22,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   return Date.parse(value);
 }
 
 /**
@@ -37,7 +37,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   return Date.parse(value);
 }
 
 
@@ -56,7 +56,11 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   let year = date.getFullYear();
+   if (year % 4 == 0 && year % 100 != 0) return true;
+   if (year % 400 == 0) return true;
+   else return false;
+
 }
 
 
@@ -76,7 +80,27 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+   let hour = endDate.getHours() - startDate.getHours();
+   let min = endDate.getMinutes() - startDate.getMinutes();
+   let sec = endDate.getSeconds() - startDate.getSeconds();
+   let milisec = endDate.getMilliseconds() - startDate.getMilliseconds();
+
+   if (hour < 10) hour = '0' + hour;
+   if (min < 10) min = '0' + min;
+   if (sec < 10) sec = '0' + sec;
+   if (milisec < 100 && milisec >= 10) milisec = '0' + milisec;
+   if (milisec < 10) milisec = '00' + milisec;
+
+   return `${hour}:${min}:${sec}.${milisec}`;
+
+   //  let day_milisec = 1000 * 60 * 60 * 24;
+
+   //  let startdate_milisec = startDate.getTime()
+   //  let enddate_milisec = endDate.getTime()
+
+   //  let result_milisec = enddate_milisec - startdate_milisec;
+
+   //  return Math.round(result_milisec/day_milisec);
 }
 
 
