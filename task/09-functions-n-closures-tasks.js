@@ -98,8 +98,15 @@ function getPolynom() {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
- }
 
+    let map = new Map();
+    return function (x) {
+        if (!map.has(x)) {
+            map.set(x, func(x));
+        }
+        return map.get(x);
+    }
+}
 
 /**
  * Returns the function trying to call the passed function and if it throws,
