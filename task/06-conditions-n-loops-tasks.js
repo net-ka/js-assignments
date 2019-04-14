@@ -140,7 +140,11 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    if (rect2.top > rect1.top + rect1.height) return false;
+    if (rect2.left > rect1.left + rect1.width) return false;
+    if (rect1.top > rect2.top + rect2.height) return false;
+    if (rect1.left > rect2.left + rect2.width) return false;
+    return true;
 }
 
 
@@ -171,7 +175,8 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    if (Math.sqrt(Math.pow((point.x - circle.center.x), 2) + Math.pow((point.y - circle.center.y), 2)) < circle.radius) return true;
+    return false;
 }
 
 
@@ -217,7 +222,30 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    let first = a;
+    let second = b;
+    if (a > b) {
+        first = b;
+        second = a; 
+    }
+
+    let br1;
+    let br2;
+
+    if (isStartIncluded == true) {
+        br1 = '[';
+    } else {
+        br1 = '(';
+    }
+
+    if (isEndIncluded == true) {
+        br2 = ']';
+    } else {
+        br2 = ')';
+    }
+
+    return (br1 + first + ', ' + second + br2);
+
 }
 
 
@@ -278,7 +306,13 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+    let ccnstring = ccn.toString();
+    return ccnstring.split('')
+        .reverse()
+        .map( (x) => parseInt(x) )
+        .map( (x,idx) => idx % 2 ? x * 2 : x )
+        .map( (x) => x > 9 ? (x % 10) + 1 : x )
+        .reduce( (accum, x) => accum += x ) % 10 === 0;
 }
 
 
@@ -297,7 +331,31 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+let sum = 0;
+while (num > 0) {
+    sum += num % 10;
+    num = Math.floor(num / 10);
+}
+if (sum > 9) {
+    let sum2 = 0;
+    while (sum > 0) {
+        sum2 += sum % 10;
+        sum = Math.floor(sum / 10);
+    }
+    return sum2;
+}
+return sum;
+
+    // let numstring = num.toString();
+    // let numarr = numstring.split('');
+    // let sum1 = numarr.reduce((a, b) => Number(a) + Number(b));
+    // if (Number(sum1) > 9) {
+    //     let numstring2 = sum1.join('');
+    //     let numarr2 = numstring2.split('');
+    //     let sum2 = numarr2.reduce((a, b) => Number(a) + Number(b));
+    //     return sum2;
+    // }
+    // return sum1;
 }
 
 
@@ -359,8 +417,57 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    let t = endDate.getTime() - startDate.getTime();
+    let sec = t / 1000;
+    let min = sec / 60;
+    let hour = min / 60;
+    let day = hour / 24;
+    
+    if (sec <= 45) {
+        return 'a few seconds ago';
+    }
+
+    if (sec <= 90) {
+        return 'a minute ago';
+    }
+
+    if (min <= 45) {
+        return `${Math.floor(min)} minutes ago`;
+    }
+
+    if (min <= 90) {
+        return 'an hour ago';
+    }
+
+    if (hour <= 22) {
+        return `${Math.floor(hour)} hours ago`;
+    }
+
+    if (hour <= 36) {
+        return 'a day ago';
+    }
+
+    if (day <= 25) {
+        return `${Math.floor(day)} days ago`;
+    }
+
+    if (day <= 45) {
+        return 'a month ago';
+    }
+
+    if (day <= 345) {
+        return `${Math.floor(day / 30)} months ago`;
+    }
+
+    if (day <= 545) {
+        return 'a year ago';
+    }
+
+    if (day >= 546) {
+        return `${Math.floor(day / 365)} years ago`;
+    }
 }
+
 
 
 /**
@@ -383,7 +490,7 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    return num.toString(n);
 }
 
 
@@ -401,6 +508,7 @@ function toNaryString(num, n) {
  */
 function getCommonDirectoryPath(pathes) {
     throw new Error('Not implemented');
+
 }
 
 
